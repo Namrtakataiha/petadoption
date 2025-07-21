@@ -7,6 +7,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email', 'password', 'mobile_no', 'address', 'is_admin', 'is_verified']
         extra_kwargs = {'password': {'write_only': True}}
+        
+        def create(self, validated_data):
+           validated_data['password'] = make_password(validated_data['password'])
+           return super().create(validated_data) 
 
 # Serializer for Category
 class CategorySerializer(serializers.ModelSerializer):

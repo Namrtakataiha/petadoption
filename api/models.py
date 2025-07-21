@@ -5,10 +5,25 @@ from django.contrib.auth.models import User
 # Extending default User model to include is_admin field
 # c# Custom User model with extra fields
 class User(AbstractUser):
-    is_admin = models.BooleanField(default=False)
-    mobile_no = models.CharField(max_length=15, null=True, blank=True)
-    address = models.TextField(null=True, blank=True)
-    is_verified = models.BooleanField(default=False)
+     mobile_no = models.CharField(max_length=15, blank=True, null=True)
+     address = models.TextField(blank=True, null=True)
+     is_verified = models.BooleanField(default=False)
+     is_admin = models.BooleanField(default=False)
+     email = models.EmailField(unique=True)
+
+class UserOTP(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    otp = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+
+
+    # temp_username = models.CharField(max_length=150, null=True, blank=True)
+    # temp_email = models.EmailField(null=True, blank=True)
+    # temp_password = models.CharField(max_length=255, null=True, blank=True)
+    # temp_mobile_no = models.CharField(max_length=15, null=True, blank=True)
+    # temp_address = models.TextField(null=True, blank=True)
+    # is_admin = models.BooleanField(default=False)
 # Pet category model
 class Category(models.Model):
     name = models.CharField(max_length=100)
